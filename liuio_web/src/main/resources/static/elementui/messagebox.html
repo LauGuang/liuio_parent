@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+
+
+</head>
+<body>
+<div id="app">
+    <el-table
+            :data="tableData"
+            style="width: 100%">
+        <el-table-column
+                prop="date"
+                label="日期"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+        </el-table-column>
+        <el-table-column
+                prop="address"
+                label="地址">
+        </el-table-column>
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                <el-button
+                        size="mini"
+                        type="danger"
+                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+     <div align="center">
+
+         <el-pagination
+                 background
+                 layout="prev, pager, next,jumper"
+                 :page-size="paginationData.pageSize"
+                 :current-page="paginationData.currentPage"
+                 :total="paginationData.total"
+                 @current-change="currentChange"
+         >
+             <!--@current-change="currentChange"   当前页码变化  自动触发 事件  分页栏 点击页码查询-->
+         </el-pagination>
+     </div>
+</div>
+
+
+
+<script>
+    var  vm = new Vue({
+        el:"#app",
+        data:{
+          //  定义 单独对象   处理分页相关数据
+            paginationData:{
+                total:1000, //   数据模型定义 总记录数据   limit ?,?
+                pageSize:20,
+                currentPage:1,  //   条件分页查询  PageBean
+                queryString:null  //   this.paginationData   {}
+            },
+
+
+
+            tableData: [{
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }
+            ]
+        },
+        methods:{
+            //  分页页码变化  该函数会触发
+            currentChange(curpage){
+             alert(curpage)  //   点击的最新页码
+                //  axio 请求 发送后台 分页查询   获取最新的页码和每页记录数
+                // axios.get("xxx?pageNum="+curpage+"&pageSize="+this.paginationData.pageSize).then((res)=>{
+                //     this.tableData = res.data.data  ----List<User>   select  * from  users  limit  ?,?
+                //         this.pagination.total = res.data.total    select count(1) from users
+                // })
+
+            },
+            handleEdit(index, row) {
+                console.log(index, row);
+                alert(row.address)
+            },
+            handleDelete(index, row) {
+                //  删除  确认
+
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'  //  warning  success  info  error
+                }).then(() => {
+                    //   确认 执行业务   alert
+                   this.$message.success("删除成功")  // 消息提示
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '删除成功!'
+                    // });
+                }).catch(() => {
+                    //  点击取消  业务
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+
+
+
+            }
+        },
+        created(){
+
+            
+
+        }
+
+    })
+</script>
+</body>
+</html>

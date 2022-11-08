@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ElementUI主页</title>
+    <link rel="stylesheet" href="css/index.css">
+
+
+
+</head>
+<body>
+<div id="app">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="checkPass">
+            <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄" prop="age">
+            <el-input v-model.number="ruleForm.age"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="mysubmit">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+
+
+
+<script src="js/vue.js"></script>
+<script src="js/index.js"></script>
+<script src="js/axios-0.18.0.js"></script>
+<script>
+
+
+    const vu = new Vue({
+        el: '#app',
+
+        data() {
+            return {
+              //   封装表单数据
+                ruleForm: {
+                    pass: "",
+                    checkPass: "",
+                    age: ""
+                },
+                rules: {
+
+                    pass: [
+                        {required: true, message: "请输入密码", trigger: "blur"},
+                        {min: 5, max: 8, message: "密码长度5-8个字符", trigger: "blur"}
+                    ],
+                    checkPass: [
+                        {required: true, message: "请输入密码", trigger: "blur"},
+                        {min: 5, max: 8, message: "密码长度5-8个字符", trigger: "blur"}
+                    ],
+                    age: [
+                        {required: true, message: "请输入年纪", trigger: "blur"},
+                        //  可以添加正则表达式  1-100整数校验
+                        {pattern: /(^[1-9][0-9]$)|(^100&)|(^[1-9]$)$/, message: "年纪范围1-100岁", trigger: "blur"}
+                    ]
+
+                }
+            }
+        },
+        methods:{
+
+            mysubmit(){
+                //  1  判断校验是否合法
+
+                this.$refs['ruleForm'].validate((valid)=>{
+                    alert(valid)
+                    if(valid){
+                        axios.post("/xxx.do",this.ruleForm).then((res)=>{
+                            if(res.data){
+                                this.$message.success("添加成功")
+                            }
+                        })
+                    }else{
+                        this.$message.error("非法数据")
+                    }
+                })
+
+            }
+
+        }
+
+
+    })
+
+</script>
+</body>
+</html>

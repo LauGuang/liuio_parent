@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.js"></script>
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+
+    <style>
+        .el-header, .el-footer {
+            background-color: #B3C0D1;
+            color: #333;
+            text-align: right;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            background-color: #D3DCE6;
+            color: #333;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .el-main {
+            background-color: #E9EEF3;
+            color: #333;
+            text-align: center;
+        }
+
+        /*找到html标签、body标签，和挂载的标签*/
+        /*都给他们统一设置样式*/
+        html,body,.el-container{
+            /*设置内部填充为0，几个布局元素之间没有间距*/
+            padding: 0px;
+            /*外部间距也是如此设置*/
+            margin: 0px;
+            /*统一设置高度，高度自行调整*/
+            height: 1300px;
+        }
+
+    </style>
+
+    <style>
+        .el-dropdown-link {
+            cursor: pointer;
+            color: #409EFF;
+        }
+        .el-icon-arrow-down {
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                用户管理<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>设置</el-dropdown-item>
+                    <el-dropdown-item>密码修改</el-dropdown-item>
+                    <el-dropdown-item>
+                        <a href="login.html">用户退出</a>
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+
+        </el-header>
+        <el-container>
+            <el-aside>侧边栏容器</el-aside>
+            <el-main>主要区域容器</el-main>
+        </el-container>
+        <el-container>
+            <el-footer>底部区域</el-footer>
+        </el-container>
+    </el-container>
+</div>
+
+
+
+<script>
+    var  vm = new Vue({
+        el:"#app",
+        // data:{
+        //     kk:'123'  //  数据模型 全局   全局变量   所有的方法都可以     局部变量  方法体内部声明
+        // }
+        data(){
+            return{
+                kk:'123'   // var   let
+            }
+        }
+
+    })
+</script>
+</body>
+</html>
